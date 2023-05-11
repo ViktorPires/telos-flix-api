@@ -1,0 +1,162 @@
+[
+  {
+    "title": "The Shawshank Redemption",
+    "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+    "year": 1994,
+    "genres": ["Drama"],
+    "image": "https://www.themoviedb.org/t/p/original/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg",
+    "video": "https://www.youtube.com/watch?v=6hB3S9bIaco"
+  },
+  {
+    "title": "The Godfather",
+    "description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+    "year": 1972,
+    "genres": ["Crime", "Drama"],
+    "image": "https://www.themoviedb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+    "video": "https://www.youtube.com/watch?v=sY1S34973zA"
+  },
+  {
+    "title": "The Godfather: Part II",
+    "description": "The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.",
+    "year": 1974,
+    "genres": ["Crime", "Drama"],
+    "image": "https://www.themoviedb.org/t/p/original/bVq65huQ8vHDd1a4Z37QtuyEvpA.jpg",
+    "video": "https://www.youtube.com/watch?v=9O1Iy9od7-A"
+  },
+  {
+    "title": "Pulp Fiction",
+    "description": "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+    "year": 1994,
+    "genres": ["Crime", "Drama"],
+    "image": "https://www.themoviedb.org/t/p/original/dM2w364MScsjFf8pfMbaWUcWrR.jpg",
+    "video": "https://www.youtube.com/watch?v=s7EdQ4FqbhY"
+  },
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "description": "A meek hobbit of the Shire and eight companions set out on a journey to Mount Doom to destroy the One Ring and the dark lord Sauron.",
+    "year": 2001,
+    "genres": ["Action", "Adventure", "Drama"],
+    "image": "https://www.themoviedb.org/t/p/original/56zTpe2xvaA4alU51sRWPoKPYZy.jpg",
+    "video": "https://www.youtube.com/watch?v=Pki6jbSbXIY"
+  },
+  {
+    "title": "The Lord of the Rings: The Return of the King",
+    "description": "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+    "year": 2003,
+    "genres": ["Action", "Adventure", "Drama", "Fantasy"],
+    "image": "https://www.themoviedb.org/t/p/original/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg",
+    "video": "https://www.youtube.com/watch?v=r5X-hFf6Bwo"
+  },
+  {
+    "title": "Saving Private Ryan",
+    "description": "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action.",
+    "year": 1998,
+    "genres": ["Drama", "War"],
+    "image": "https://www.themoviedb.org/t/p/original/miDoEMlYDJhOCvxlzI0wZqBs9Yt.jpg",
+    "video": "https://www.youtube.com/watch?v=zwhP5b4tD6g"
+  },
+  {
+    "title": "Gladiator",
+    "description": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
+    "year": 2000,
+    "genres": ["Action", "Adventure", "Drama"],
+    "image": "https://www.themoviedb.org/t/p/original/6WBIzCgmDCYrqh64yDREGeDk9d3.jpg",
+    "video": "https://www.youtube.com/watch?v=owK1qxDselE"
+  },
+  {
+    "title": "The Departed",
+    "description": "An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.",
+    "year": 2006,
+    "genres": ["Crime", "Drama", "Thriller"],
+    "image": "https://www.themoviedb.org/t/p/original/wMgbnUVS9wbRGAdki8fqxKU1O0N.jpg",
+    "video": "https://www.youtube.com/watch?v=SGWvwjZ0eDc"
+  },
+  {
+    "title": "Forrest Gump",
+    "description": "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate and other historical events unfold through the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart.",
+    "year": 1994,
+    "genres": ["Drama", "Romance"],
+    "image": "https://www.themoviedb.org/t/p/original/clolk7rB5lAjs41SD0Vt6IXYLMm.jpg",
+    "video": "https://www.youtube.com/watch?v=uPIEn0M8su0"
+  },
+  {
+    "title": "Interstellar",
+    "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+    "year": 2014,
+    "genres": ["Adventure", "Drama", "Sci-Fi"],
+    "image": "https://www.themoviedb.org/t/p/original/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg",
+    "video": "https://www.youtube.com/watch?v=zSWdZVtXT7E"
+  },
+  {
+    "title": "Inception",
+    "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+    "year": 2010,
+    "genres": ["Action", "Adventure", "Sci-Fi"],
+    "image": "https://www.themoviedb.org/t/p/original/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
+    "video": "https://www.youtube.com/watch?v=d3A3-zSOBT4"
+  },
+  {
+    "title": "The Matrix",
+    "description": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+    "year": 1999,
+    "genres": ["Action", "Sci-Fi"],
+    "image": "https://www.themoviedb.org/t/p/original/hEpWvX6Bp79eLxY1kX5ZZJcme5U.jpg",
+    "video": "https://www.youtube.com/watch?v=m8e-FF8MsqU"
+  },
+  {
+    "title": "The Dark Knight",
+    "description": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+    "year": 2008,
+    "genres": ["Action", "Crime", "Drama"],
+    "image": "https://www.themoviedb.org/t/p/original/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg",
+    "video": "https://www.youtube.com/watch?v=EXeTwQWrcwY"
+  },
+  {
+    "title": "The Avengers",
+    "description": "Earth's mightiest heroes must come together and learn to fight as a team if they are to stop the mischievous Loki and his alien army from enslaving humanity.",
+    "year": 2012,
+    "genres": ["Action", "Adventure", "Sci-Fi"],
+    "image": "https://www.themoviedb.org/t/p/original/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
+    "video": "https://www.youtube.com/watch?v=eOrNdBpGMv8"
+  },
+  {
+    "title": "Avengers: Age of Ultron",
+    "description": "When Tony Stark and Bruce Banner try to jump-start a dormant peacekeeping program called Ultron, things go horribly wrong and it's up to Earth's mightiest heroes to stop the villainous Ultron from enacting his terrible plan.",
+    "year": 2015,
+    "genres": ["Action", "Adventure", "Sci-Fi"],
+    "image": "https://www.themoviedb.org/t/p/original/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg",
+    "video": "https://www.youtube.com/watch?v=tmeOjFno6Do"
+  },
+  {
+    "title": "Avengers: Infinity War",
+    "description": "The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe.",
+    "year": 2018,
+    "genres": ["Action", "Adventure", "Sci-Fi"],
+    "image": "https://www.themoviedb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+    "video": "https://www.youtube.com/watch?v=6ZfuNTqbHE8"
+  },
+  {
+    "title": "Harry Potter and the Philosopher's Stone",
+    "description": "An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.",
+    "year": 2001,
+    "genres": ["Adventure", "Family", "Fantasy"],
+    "image": "https://www.themoviedb.org/t/p/original/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg",
+    "video": "https://www.youtube.com/watch?v=VyHV0BRtdxo"
+  },
+  {
+    "title": "Harry Potter and the Chamber of Secrets",
+    "description": "An ancient prophecy seems to be coming true when a mysterious presence begins stalking the corridors of a school of magic and leaving its victims paralyzed.",
+    "year": 2002,
+    "genres": ["Adventure", "Family", "Fantasy"],
+    "image": "https://www.themoviedb.org/t/p/original/dCtFvscYcXQKTNvyyaQr2g2UacJ.jpg",
+    "video": "https://www.youtube.com/watch?v=1bq0qff4iF8"
+  },
+  {
+    "title": "Harry Potter and the Prisoner of Azkaban",
+    "description": "Harry Potter, Ron and Hermione return to Hogwarts School of Witchcraft and Wizardry for their third year of study, where they delve into the mystery surrounding an escaped prisoner who poses a dangerous threat to the young wizard.",
+    "year": 2004,
+    "genres": ["Adventure", "Family", "Fantasy"],
+    "image": "https://www.themoviedb.org/t/p/original/jUFjMoLh8T2CWzHUSjKCojI5SHu.jpg",
+    "video": "https://www.youtube.com/watch?v=lAxgztbYDbs"
+  }
+]
