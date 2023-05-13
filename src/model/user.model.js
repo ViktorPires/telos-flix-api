@@ -21,6 +21,11 @@ const UserSchema = new mongoose.Schema(
     age: {
       type: Number,
     },
+    role: {
+      type: String,
+      enum: ['customer', 'admin'],
+      default: 'customer'
+    }
   },
   {
     timestamps: true,

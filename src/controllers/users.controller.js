@@ -33,7 +33,7 @@ const getById = async (request, response) => {
 };
 
 const create = async (request, response) => {
-  const { name, email, password, age } = request.body;
+  const { name, email, password, age, } = request.body;
 
   try {
     const user = await UserModel.create({
@@ -44,6 +44,36 @@ const create = async (request, response) => {
     });
 
     return response.status(201).json(user);
+  } catch (err) {
+    return response.status(400).json({
+      error: "@users/create",
+      message: err.message || "Failed to create user",
+    });
+  }
+};
+
+const createAdminUsers = async (request, response) => {
+  const { role } = request.user
+  const { name, email, password, age } = request.body;
+
+  if (role !== "admin") {
+    return response.status(401).json({
+      error: "@users/createAdmin",
+      message: "You don't have the permission to create an admin",
+    });
+  }
+
+
+  try {
+    const newUser = await UserModel.create({
+      name,
+      email,
+      password,
+      age,
+      role: 'admin'
+    });
+
+    return response.json(newUser)
   } catch (err) {
     return response.status(400).json({
       error: "@users/create",
@@ -104,6 +134,7 @@ module.exports = {
   list,
   getById,
   create,
+  createAdminUsers,
   update,
   remove,
 };
