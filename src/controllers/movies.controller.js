@@ -1,5 +1,9 @@
 const MovieModel = require("../model/movie.model");
 
+const jwt = require("jsonwebtoken");
+
+const { JWT_SECRET } = require("../config/env");
+
 const list = async (request, response) => {
   try {
     const movies = await MovieModel.find();
@@ -15,19 +19,76 @@ const list = async (request, response) => {
 
 const getById = async (request, response) => {
   const { id } = request.params;
+  const { authorization } = request.headers;
 
   try {
-    const movie = await MovieModel.findById(id);
+    let movie;
 
-    if (!movie) {
-      throw new Error();
+    if(authorization) {
+      const [prefix, token] = authorization.split(" ");
+
+      if(prefix === "Bearer" && token) {
+        // Validating JWT
+        const jwtService = require("jsonwebtoken");
+        const { JWT_SECRET } = require("../config/env");
+
+        jwtService.verify(token, JWT_SECRET, async (err) => {
+          if(err) {
+            movie = await MovieModel.findById(id).select("-video");
+
+            if(!movie) {
+              throw new Error();
+            }
+            
+            console.log("Invalid Token: ", err.message);
+
+            return response.json(movie);
+          }
+
+          movie = await MovieModel.findById(id);
+
+          if(!movie) {
+            throw new Error();
+          }
+
+          return response.json(movie);
+        });
+      } else {
+        movie = await MovieModel.findById(id).select("-video");
+
+        if(!movie) {
+          throw new Error();
+        }
+
+        return response.json(movie);
+      }
+    } else {
+      movie = await MovieModel.findById(id).select("-video");
+
+      if(!movie) {
+        throw new Error();
+      }
+
+      return response.json(movie);
     }
-
-    return response.json(movie);
   } catch (err) {
     return response.status(400).json({
       error: "@movies/getById",
       message: err.message || `Movie not found ${id}`,
+    });
+  }
+};
+
+const listGenres = async (request, response) => {
+  try {
+    const genres = await MovieModel.distinct('genres');
+    const sortedGenres = genres.sort();
+
+    return response.json(sortedGenres);
+  } catch (err) {
+    return response.status(400).json({
+      error: "@movies/listGenres",
+      message: err.message || "Failed to list genres",
     });
   }
 };
@@ -105,6 +166,7 @@ const remove = async (request, response) => {
 module.exports = {
   list,
   getById,
+  listGenres,
   create,
   update,
   remove,

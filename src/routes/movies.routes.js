@@ -7,6 +7,7 @@ const { verifyAuthenticate } = require("../middlewares/verifyAuthentication");
 const routes = Router();
 
 routes.get("/movies", moviesController.list);
+routes.get("/movies/genres", moviesController.listGenres);
 routes.get("/movies/:id", moviesController.getById);
 
 routes.post("/movies", verifyAuthenticate, moviesController.create);
