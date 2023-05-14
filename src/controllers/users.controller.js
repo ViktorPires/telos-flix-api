@@ -53,16 +53,7 @@ const create = async (request, response) => {
 };
 
 const createAdminUsers = async (request, response) => {
-  const { role } = request.user
   const { name, email, password, age } = request.body;
-
-  if (role !== "admin") {
-    return response.status(401).json({
-      error: "@users/createAdmin",
-      message: "You don't have the permission to create an admin",
-    });
-  }
-
 
   try {
     const newUser = await UserModel.create({
