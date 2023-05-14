@@ -11,7 +11,7 @@ const verifyAuthorization = (request, response, next) => {
   if (role !== "admin") {
     return response.status(401).json({
       error: "@authorization/invalid-role",
-      message: "role provided is not valid",
+      message: "role provided is not authorized",
     })
   };
 
