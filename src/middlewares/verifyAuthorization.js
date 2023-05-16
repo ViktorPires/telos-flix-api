@@ -1,5 +1,5 @@
 const verifyAuthorization = (request, response, next) => {
-  const { role } = request.user
+  const { role } = request.user;
 
   if (!role) {
     return response.status(400).json({

@@ -1,5 +1,12 @@
 const MovieModel = require("../model/movie.model");
 
+<<<<<<< Updated upstream
+=======
+const jwtService = require("jsonwebtoken");
+
+const { JWT_SECRET } = require("../config/env");
+
+>>>>>>> Stashed changes
 const list = async (request, response) => {
   const { page } = request.params
   const { title, genres } = request.query
@@ -30,9 +37,6 @@ const getById = async (request, response) => {
 
       if (prefix === "Bearer" && token) {
         // Validating JWT
-        const jwtService = require("jsonwebtoken");
-        const { JWT_SECRET } = require("../config/env");
-
         jwtService.verify(token, JWT_SECRET, async (err) => {
           if (err) {
             movie = await MovieModel.findById(id).select("-video");

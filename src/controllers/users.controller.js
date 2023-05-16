@@ -33,7 +33,7 @@ const getById = async (request, response) => {
 };
 
 const create = async (request, response) => {
-  const { name, email, password, age, } = request.body;
+  const { name, email, password, age } = request.body;
 
   try {
     const user = await UserModel.create({
