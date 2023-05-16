@@ -1,12 +1,13 @@
 const MovieModel = require("../model/movie.model");
 
-const jwt = require("jsonwebtoken");
-
-const { JWT_SECRET } = require("../config/env");
-
 const list = async (request, response) => {
+  const { page } = request.params
+  const { title, genres } = request.query
+  const formattedTitle = RegExp(title)
+  const formattedGenres = genres.split(" ")
+
   try {
-    const movies = await MovieModel.find();
+    const movies = await MovieModel.find(title ? { title: { $regex: formattedTitle } } : { genres: { $all: formattedGenres } }).limit(10).skip((page - 1) * 10)
 
     return response.json(movies);
   } catch (err) {
@@ -24,22 +25,22 @@ const getById = async (request, response) => {
   try {
     let movie;
 
-    if(authorization) {
+    if (authorization) {
       const [prefix, token] = authorization.split(" ");
 
-      if(prefix === "Bearer" && token) {
+      if (prefix === "Bearer" && token) {
         // Validating JWT
         const jwtService = require("jsonwebtoken");
         const { JWT_SECRET } = require("../config/env");
 
         jwtService.verify(token, JWT_SECRET, async (err) => {
-          if(err) {
+          if (err) {
             movie = await MovieModel.findById(id).select("-video");
 
-            if(!movie) {
+            if (!movie) {
               throw new Error();
             }
-            
+
             console.log("Invalid Token: ", err.message);
 
             return response.json(movie);
@@ -47,7 +48,7 @@ const getById = async (request, response) => {
 
           movie = await MovieModel.findById(id);
 
-          if(!movie) {
+          if (!movie) {
             throw new Error();
           }
 
@@ -56,7 +57,7 @@ const getById = async (request, response) => {
       } else {
         movie = await MovieModel.findById(id).select("-video");
 
-        if(!movie) {
+        if (!movie) {
           throw new Error();
         }
 
@@ -65,7 +66,7 @@ const getById = async (request, response) => {
     } else {
       movie = await MovieModel.findById(id).select("-video");
 
-      if(!movie) {
+      if (!movie) {
         throw new Error();
       }
 
