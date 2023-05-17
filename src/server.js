@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require('cors')
 
 require("./config/database");
 
@@ -10,6 +11,8 @@ const commentRoutes = require("./routes/comments.routes");
 const authenticateRoutes = require("./routes/authenticate.routes");
 
 const app = express();
+
+app.use(cors())
 
 app.use(express.json());
 
