@@ -1,12 +1,5 @@
 const MovieModel = require("../model/movie.model");
 
-<<<<<<< Updated upstream
-=======
-const jwtService = require("jsonwebtoken");
-
-const { JWT_SECRET } = require("../config/env");
-
->>>>>>> Stashed changes
 const list = async (request, response) => {
   const { page } = request.params
   const { title, genres } = request.query

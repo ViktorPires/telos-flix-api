@@ -74,19 +74,36 @@ const createAdminUsers = async (request, response) => {
 };
 
 const update = async (request, response) => {
+  const { compareHash } = require('../utils/hashProvider');
+
   const { id } = request.params;
   const { name, email, password, age } = request.body;
 
   try {
+    const userPassword = await UserModel.findById(id).select('password');
+
+    if (!userPassword) {
+      throw new Error(`User not found ${id}`);
+    }
+
+    const isSamePassword = await compareHash(password, userPassword.password);
+
+    const updatedFields = {
+      name,
+      email,
+      age,
+    };
+
+    if (!isSamePassword) {
+      updatedFields.password = password;
+    }
+
     const userUpdated = await UserModel.findByIdAndUpdate(
       id,
-      {
-        name,
-        email,
-        password,
-        age,
-      },
-      { new: true }
+      updatedFields,
+      { 
+        new: true 
+      }
     );
 
     if (!userUpdated) {
