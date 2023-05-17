@@ -3,11 +3,11 @@ const MovieModel = require("../model/movie.model");
 const list = async (request, response) => {
   const { page } = request.params
   const { title, genres } = request.query
-  const formattedTitle = RegExp(title)
-  const formattedGenres = genres.split(" ")
+  const formattedTitle = RegExp(title);
+  const formattedGenres = genres ? genres.split(" ") : [];
 
   try {
-    const movies = await MovieModel.find(title ? { title: { $regex: formattedTitle } } : { genres: { $all: formattedGenres } }).limit(10).skip((page - 1) * 10)
+    const movies = await MovieModel.find(title ? { title: { $regex: formattedTitle, $options: "i"} } : { genres: { $all: formattedGenres } }).limit(10).skip((page - 1) * 10)
 
     return response.json(movies);
   } catch (err) {
@@ -32,7 +32,7 @@ const getById = async (request, response) => {
         // Validating JWT
         const jwtService = require("jsonwebtoken");
         const { JWT_SECRET } = require("../config/env");
-        
+
         jwtService.verify(token, JWT_SECRET, async (err) => {
           if (err) {
             movie = await MovieModel.findById(id).select("-video");
