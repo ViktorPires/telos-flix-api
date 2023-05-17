@@ -30,6 +30,9 @@ const getById = async (request, response) => {
 
       if (prefix === "Bearer" && token) {
         // Validating JWT
+        const jwtService = require("jsonwebtoken");
+        const { JWT_SECRET } = require("../config/env");
+        
         jwtService.verify(token, JWT_SECRET, async (err) => {
           if (err) {
             movie = await MovieModel.findById(id).select("-video");

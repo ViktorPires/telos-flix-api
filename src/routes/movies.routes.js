@@ -7,7 +7,7 @@ const { verifyAuthorization } = require("../middlewares/verifyAuthorization");
 
 const routes = Router();
 
-routes.get("/movies/:page", moviesController.list);
+routes.get("/movies/page/:page", moviesController.list);
 routes.get("/movies/genres", moviesController.listGenres);
 routes.get("/movies/:id", moviesController.getById);
 
