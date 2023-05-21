@@ -4,16 +4,17 @@ const moviesController = require("../controllers/movies.controller");
 
 const { verifyAuthenticate } = require("../middlewares/verifyAuthentication");
 const { verifyAuthorization } = require("../middlewares/verifyAuthorization");
+const { verifyIfUserHasAuthentication } = require("../middlewares/verifyIfUserHasAuthentication")
 
 const routes = Router();
 
-routes.get("/movies/page/:page", moviesController.list);
+routes.get("/movies/", verifyIfUserHasAuthentication, moviesController.list);
 routes.get("/movies/genres", moviesController.listGenres);
-routes.get("/movies/:id", moviesController.getById);
+routes.get("/movies/:id", verifyIfUserHasAuthentication, moviesController.getById);
 
 routes.post("/movies", verifyAuthenticate, verifyAuthorization, moviesController.create);
 
-routes.put("/movies/:id", moviesController.update);
+routes.put("/movies/:id", verifyAuthenticate, verifyAuthorization, moviesController.update);
 
 routes.delete("/movies/:id", moviesController.remove);
 
