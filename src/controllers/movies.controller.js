@@ -1,4 +1,3 @@
-const movieModel = require("../model/movie.model");
 const MovieModel = require("../model/movie.model");
 
 const list = async (request, response) => {
@@ -17,7 +16,7 @@ const list = async (request, response) => {
       return response.json(filteredMovies);
     }
 
-    const unfilteredMovies = await movieModel
+    const unfilteredMovies = await MovieModel
       .find()
       .limit(limit || 10)
       .skip((page - 1) * (limit || 10))
