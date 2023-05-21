@@ -1,3 +1,4 @@
+const { compareHash } = require('../utils/hashProvider');
 const UserModel = require("../model/user.model");
 
 const list = async (request, response) => {
@@ -41,6 +42,7 @@ const create = async (request, response) => {
       email,
       password,
       age,
+      role: "customer"
     });
 
     return response.status(201).json(user);
@@ -74,8 +76,6 @@ const createAdminUsers = async (request, response) => {
 };
 
 const update = async (request, response) => {
-  const { compareHash } = require('../utils/hashProvider');
-
   const { id } = request.params;
   const { name, email, password, age } = request.body;
 
@@ -86,13 +86,13 @@ const update = async (request, response) => {
       throw new Error(`User not found ${id}`);
     }
 
-    const isSamePassword = await compareHash(password, userPassword.password);
-
     const updatedFields = {
       name,
       email,
       age,
     };
+
+    const isSamePassword = await compareHash(password, userPassword.password);
 
     if (!isSamePassword) {
       updatedFields.password = password;
@@ -101,8 +101,8 @@ const update = async (request, response) => {
     const userUpdated = await UserModel.findByIdAndUpdate(
       id,
       updatedFields,
-      { 
-        new: true 
+      {
+        new: true
       }
     );
 
