@@ -16,12 +16,16 @@ const verifyIfUserHasAuthentication = (request, response, next) => {
           });
         }
         request.user = decoded;
+        return next();
       })
+    } else {
+      request.user = null;
+      return next();
     }
   } else {
-    request.user = null
+    request.user = null;
+    return next();
   }
-  return next()
 }
 
 module.exports = { verifyIfUserHasAuthentication }
