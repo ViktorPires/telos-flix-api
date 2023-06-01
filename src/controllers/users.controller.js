@@ -92,10 +92,12 @@ const update = async (request, response) => {
       age,
     };
 
-    const isSamePassword = await compareHash(password, userPassword.password);
+    if (password) {
+      const isSamePassword = await compareHash(password, userPassword.password);
 
-    if (!isSamePassword) {
-      updatedFields.password = password;
+      if (!isSamePassword) {
+        updatedFields.password = password;
+      }
     }
 
     const userUpdated = await UserModel.findByIdAndUpdate(
