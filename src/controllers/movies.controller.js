@@ -1,15 +1,28 @@
 const MovieModel = require("../model/movie.model");
 
 const list = async (request, response) => {
-  const { page } = request.params
-  const { title, genres } = request.query
-  const formattedTitle = RegExp(title);
-  const formattedGenres = genres ? genres.split(" ") : [];
-
+  const { title, genres, limit, page } = request.query
   try {
-    const movies = await MovieModel.find(title ? { title: { $regex: formattedTitle, $options: "i"} } : { genres: { $all: formattedGenres } }).limit(10).skip((page - 1) * 10)
 
-    return response.json(movies);
+    if (title || genres) {
+      const formattedTitle = RegExp(title);
+      const formattedGenres = genres ? genres.split(" ") : [''];
+
+      const filteredMovies = await MovieModel
+        .find(title ? { title: { $regex: formattedTitle, $options: "i" } } : { genres: { $all: formattedGenres } })
+        .limit(limit || 10).skip((page - 1) * (limit || 10))
+        .select(request.user ? "" : "-video");
+
+      return response.json(filteredMovies);
+    }
+
+    const unfilteredMovies = await MovieModel
+      .find()
+      .limit(limit || 10)
+      .skip((page - 1) * (limit || 10))
+      .select(request.user ? "" : "-video");
+
+    return response.json(unfilteredMovies);
   } catch (err) {
     return response.status(400).json({
       error: "@movies/list",
@@ -20,58 +33,22 @@ const list = async (request, response) => {
 
 const getById = async (request, response) => {
   const { id } = request.params;
-  const { authorization } = request.headers;
 
   try {
     let movie;
 
-    if (authorization) {
-      const [prefix, token] = authorization.split(" ");
-
-      if (prefix === "Bearer" && token) {
-        // Validating JWT
-        const jwtService = require("jsonwebtoken");
-        const { JWT_SECRET } = require("../config/env");
-
-        jwtService.verify(token, JWT_SECRET, async (err) => {
-          if (err) {
-            movie = await MovieModel.findById(id).select("-video");
-
-            if (!movie) {
-              throw new Error();
-            }
-
-            console.log("Invalid Token: ", err.message);
-
-            return response.json(movie);
-          }
-
-          movie = await MovieModel.findById(id);
-
-          if (!movie) {
-            throw new Error();
-          }
-
-          return response.json(movie);
-        });
-      } else {
-        movie = await MovieModel.findById(id).select("-video");
-
-        if (!movie) {
-          throw new Error();
-        }
-
-        return response.json(movie);
-      }
-    } else {
+    if (!request.user) {
       movie = await MovieModel.findById(id).select("-video");
-
-      if (!movie) {
-        throw new Error();
-      }
-
-      return response.json(movie);
+    } else {
+      movie = await MovieModel.findById(id);
     }
+
+    if (!movie) {
+      throw new Error();
+    }
+
+    return response.json(movie);
+
   } catch (err) {
     return response.status(400).json({
       error: "@movies/getById",

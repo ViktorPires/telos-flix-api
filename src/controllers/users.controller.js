@@ -1,3 +1,4 @@
+const { compareHash } = require('../utils/hashProvider');
 const UserModel = require("../model/user.model");
 
 const list = async (request, response) => {
@@ -41,6 +42,7 @@ const create = async (request, response) => {
       email,
       password,
       age,
+      role: "customer"
     });
 
     return response.status(201).json(user);
@@ -74,8 +76,6 @@ const createAdminUsers = async (request, response) => {
 };
 
 const update = async (request, response) => {
-  const { compareHash } = require('../utils/hashProvider');
-
   const { id } = request.params;
   const { name, email, password, age } = request.body;
   const userId = request.user._id;
@@ -89,6 +89,7 @@ const update = async (request, response) => {
       throw new Error();
     }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     const isSamePassword = await compareHash(password, userPassword.password);
 
@@ -101,6 +102,8 @@ const update = async (request, response) => {
     }
     
 >>>>>>> Stashed changes
+=======
+>>>>>>> 47b85f785d03c4cdbd6ec1eeda28c9c9a4cc6414
     const updatedFields = {
       name,
       email,
@@ -108,7 +111,12 @@ const update = async (request, response) => {
       password
     };
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+    const isSamePassword = await compareHash(password, userPassword.password);
+
+>>>>>>> 47b85f785d03c4cdbd6ec1eeda28c9c9a4cc6414
     if (!isSamePassword) {
       updatedFields.password = password;
     }
@@ -118,8 +126,8 @@ const update = async (request, response) => {
     const userUpdated = await UserModel.findByIdAndUpdate(
       id,
       updatedFields,
-      { 
-        new: true 
+      {
+        new: true
       }
     );
 
