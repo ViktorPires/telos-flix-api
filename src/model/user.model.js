@@ -18,8 +18,8 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    age: {
-      type: Number,
+    cellphone: {
+      type: String,
     },
     role: {
       type: String,

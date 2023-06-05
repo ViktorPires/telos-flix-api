@@ -34,14 +34,14 @@ const getById = async (request, response) => {
 };
 
 const create = async (request, response) => {
-  const { name, email, password, age } = request.body;
+  const { name, email, password, cellphone } = request.body;
 
   try {
     const user = await UserModel.create({
       name,
       email,
       password,
-      age,
+      cellphone,
       role: "customer"
     });
 
@@ -55,14 +55,14 @@ const create = async (request, response) => {
 };
 
 const createAdminUsers = async (request, response) => {
-  const { name, email, password, age } = request.body;
+  const { name, email, password, cellphone } = request.body;
 
   try {
     const newUser = await UserModel.create({
       name,
       email,
       password,
-      age,
+      cellphone,
       role: 'admin'
     });
 
@@ -77,7 +77,7 @@ const createAdminUsers = async (request, response) => {
 
 const update = async (request, response) => {
   const { id } = request.params;
-  const { name, email, password, age } = request.body;
+  const { name, email, password, cellphone } = request.body;
   const userId = request.user._id;
   const role = request.user.role;
 
@@ -89,11 +89,6 @@ const update = async (request, response) => {
       throw new Error();
     }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-    const isSamePassword = await compareHash(password, userPassword.password);
-
-=======
     if (user._id.toString() !== userId && role !== "admin") {
       return response.status(401).json({
         error: "@users/update",
@@ -101,28 +96,13 @@ const update = async (request, response) => {
       });
     }
     
->>>>>>> Stashed changes
-=======
->>>>>>> 47b85f785d03c4cdbd6ec1eeda28c9c9a4cc6414
     const updatedFields = {
       name,
       email,
-      age,
+      cellphone,
       password
     };
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-    const isSamePassword = await compareHash(password, userPassword.password);
-
->>>>>>> 47b85f785d03c4cdbd6ec1eeda28c9c9a4cc6414
-    if (!isSamePassword) {
-      updatedFields.password = password;
-    }
-
-=======
->>>>>>> Stashed changes
     const userUpdated = await UserModel.findByIdAndUpdate(
       id,
       updatedFields,
