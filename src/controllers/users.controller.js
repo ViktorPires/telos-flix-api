@@ -78,26 +78,43 @@ const update = async (request, response) => {
 
   const { id } = request.params;
   const { name, email, password, age } = request.body;
+  const userId = request.user._id;
+  const role = request.user.role;
 
   try {
-    const userPassword = await UserModel.findById(id).select('password');
 
-    if (!userPassword) {
-      throw new Error(`User not found ${id}`);
+    const user = await UserModel.findById(id);
+
+    if (!user) {
+      throw new Error();
     }
 
+<<<<<<< Updated upstream
     const isSamePassword = await compareHash(password, userPassword.password);
 
+=======
+    if (user._id.toString() !== userId && role !== "admin") {
+      return response.status(401).json({
+        error: "@users/update",
+        message: 'You do not have permission to update this user',
+      });
+    }
+    
+>>>>>>> Stashed changes
     const updatedFields = {
       name,
       email,
       age,
+      password
     };
 
+<<<<<<< Updated upstream
     if (!isSamePassword) {
       updatedFields.password = password;
     }
 
+=======
+>>>>>>> Stashed changes
     const userUpdated = await UserModel.findByIdAndUpdate(
       id,
       updatedFields,
@@ -105,10 +122,6 @@ const update = async (request, response) => {
         new: true 
       }
     );
-
-    if (!userUpdated) {
-      throw new Error();
-    }
 
     return response.json(userUpdated);
   } catch (err) {
@@ -121,13 +134,24 @@ const update = async (request, response) => {
 
 const remove = async (request, response) => {
   const { id } = request.params;
+  const userId = request.user._id;
+  const role = request.user.role;
 
   try {
-    const userDeleted = await UserModel.findByIdAndDelete(id);
+    const user = await UserModel.findById(id);
 
-    if (!userDeleted) {
+    if (!user) {
       throw new Error();
     }
+
+    if (user._id.toString() !== userId && role !== "admin") {
+      return response.status(401).json({
+        error: "@users/remove",
+        message: 'You do not have permission to delete this user',
+      });
+    }
+
+    await UserModel.findByIdAndDelete(id);
 
     return response.status(204).send();
   } catch (err) {
