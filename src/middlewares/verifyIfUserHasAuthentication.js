@@ -10,10 +10,11 @@ const verifyIfUserHasAuthentication = (request, response, next) => {
     if (prefix === "Bearer" && token) {
       jwtService.verify(token, JWT_SECRET, async (err, decoded) => {
         if (err) {
-          return response.status(401).json({
-            error: "@authenticate/invalid-token",
-            message: "Token provided is invalid",
-          });
+          console.log("error: @authenticate/invalid-token");
+          console.log("Token provided is invalid");
+          
+          request.user = null;
+          return next();
         }
         request.user = decoded;
         return next();
