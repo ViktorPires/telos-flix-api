@@ -16,6 +16,6 @@ routes.post("/movies", verifyAuthenticate, verifyAuthorization, moviesController
 
 routes.put("/movies/:id", verifyAuthenticate, verifyAuthorization, moviesController.update);
 
-routes.delete("/movies/:id", moviesController.remove);
+routes.delete("/movies/:id", verifyAuthenticate, verifyAuthorization, moviesController.remove);
 
 module.exports = routes;
