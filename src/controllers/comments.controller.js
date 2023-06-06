@@ -80,12 +80,14 @@ const create = async (request, response) => {
       throw new Error();
     }
 
-    const comment = await CommentModel.create({
+    let comment = await CommentModel.create({
       user_id,
       movie_id: movie.id,
       content,
       rating: parseRating
     });
+
+    comment = await comment.populate('user_id', 'name');
 
     return response.json(comment);
   } catch (err) {
