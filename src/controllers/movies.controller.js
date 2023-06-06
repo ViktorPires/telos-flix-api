@@ -10,7 +10,7 @@ const list = async (request, response) => {
 
       const filteredMovies = await MovieModel
         .find(title ? { title: { $regex: formattedTitle, $options: "i" } } : { genres: { $all: formattedGenres } })
-        .limit(limit || 10).skip((page - 1) * (limit || 10))
+        .limit(limit || 30).skip((page - 1) * (limit || 10))
         .select(request.user ? "" : "-video");
 
       return response.json(filteredMovies);
@@ -18,7 +18,7 @@ const list = async (request, response) => {
 
     const unfilteredMovies = await MovieModel
       .find()
-      .limit(limit || 10)
+      .limit(limit || 30)
       .skip((page - 1) * (limit || 10))
       .select(request.user ? "" : "-video");
 

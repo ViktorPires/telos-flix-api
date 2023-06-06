@@ -95,7 +95,7 @@ const update = async (request, response) => {
         message: 'You do not have permission to update this user',
       });
     }
-    
+
     const updatedFields = {
       name,
       email,
@@ -103,17 +103,14 @@ const update = async (request, response) => {
       password
     };
 
-<<<<<<< HEAD
     if (password) {
-      const isSamePassword = await compareHash(password, userPassword.password);
+      const isSamePassword = await compareHash(password, user.password);
 
       if (!isSamePassword) {
         updatedFields.password = password;
       }
     }
 
-=======
->>>>>>> 915fca42b98d5b537714e854a3e02aa4ac700b81
     const userUpdated = await UserModel.findByIdAndUpdate(
       id,
       updatedFields,
