@@ -145,7 +145,7 @@ const remove = async (request, response) => {
   } catch (err) {
     return response.status(400).json({
       error: "@users/remove",
-      messaage: err.message || `User not found ${id}`,
+      message: err.message || `User not found ${id}`,
     });
   }
 };
