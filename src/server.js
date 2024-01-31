@@ -24,3 +24,5 @@ app.use(authenticateRoutes);
 app.listen(PORT, () => {
   console.log(`API Running on port ${PORT}`);
 });
+
+module.exports = app;
