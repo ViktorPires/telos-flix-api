@@ -26,6 +26,11 @@ const MovieSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isFree: {
+      type: Boolean,
+      required: false,
+      default: false,
+    }
   },
   {
     timestamps: true,
