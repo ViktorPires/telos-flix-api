@@ -37,6 +37,7 @@ const listFreeMovies = async (request, response) => {
   try {
     const freeMovies = await MovieModel
       .find({ isFree: true })
+      .select("-video")
       .limit(limit || 10)
       .skip((page - 1) * (limit || 10));
 
@@ -56,20 +57,19 @@ const getById = async (request, response) => {
   const { id } = request.params;
 
   try {
-    let movie;
-
-    if (!request.user) {
-      movie = await MovieModel.findById(id).select("-video");
-    } else {
-      movie = await MovieModel.findById(id);
-    }
+    const movie = await MovieModel.findById(id);
 
     if (!movie) {
       throw new Error();
     }
 
-    return response.json(movie);
+    if (movie.isFree || request.user) {
+      return response.json(movie);
+    }
 
+    delete movie.video
+
+    return response.json(movie);
   } catch (err) {
     return response.status(400).json({
       error: "@movies/getById",
