@@ -9,6 +9,7 @@ const userRoutes = require("./routes/users.routes");
 const movieRoutes = require("./routes/movies.routes");
 const commentRoutes = require("./routes/comments.routes");
 const authenticateRoutes = require("./routes/authenticate.routes");
+const errorsRoutes = require("./routes/errors.routes");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(userRoutes);
 app.use(movieRoutes);
 app.use(commentRoutes);
 app.use(authenticateRoutes);
+app.use(errorsRoutes);
 
 app.listen(PORT, () => {
   console.log(`API Running on port ${PORT}`);
