@@ -7,7 +7,7 @@ const { verifyAuthorization } = require("../middlewares/verifyAuthorization");
 
 const routes = Router();
 
-routes.get("/comments", commentsController.list);
+routes.get("/comments", verifyAuthenticate, verifyAuthorization, commentsController.list);
 routes.get("/comments/movie/:movie_id", commentsController.listCommentsByMovie);
 routes.get("/comments/:id", commentsController.getById);
 
