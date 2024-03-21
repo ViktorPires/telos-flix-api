@@ -1,7 +1,9 @@
 const CommentModel = require("../model/comment.model");
 const MovieModel = require("../model/movie.model");
+const { userHasCommentedOnMovie } = require('../validators/comment.validations');
 
 const { InvalidRatingException } = require("../exceptions/InvalidRatingException");
+const { UserAlreadyCommentedException } = require("../exceptions/UserAlreadyCommentedException");
 
 const list = async (request, response) => {
   try {
@@ -75,9 +77,13 @@ const create = async (request, response) => {
     }
 
     const movie = await MovieModel.findById(movie_id);
-
     if (!movie) {
       throw new Error();
+    }
+
+    const hasCommentedBefore = await userHasCommentedOnMovie(user_id, movie.id);
+    if (hasCommentedBefore) {
+      throw new UserAlreadyCommentedException();
     }
 
     let comment = await CommentModel.create({
