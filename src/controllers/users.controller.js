@@ -45,6 +45,8 @@ const create = async (request, response) => {
       role: "customer"
     });
 
+    delete user.password;
+
     return response.status(201).json(user);
   } catch (err) {
     return response.status(400).json({
@@ -66,6 +68,8 @@ const createAdminUsers = async (request, response) => {
       role: 'admin'
     });
 
+    delete newUser.password;
+
     return response.json(newUser)
   } catch (err) {
     return response.status(400).json({
@@ -82,42 +86,28 @@ const update = async (request, response) => {
   const role = request.user.role;
 
   try {
-
     const user = await UserModel.findById(id);
-
     if (!user) {
       throw new Error();
     }
-
     if (user._id.toString() !== userId && role !== "admin") {
       return response.status(401).json({
         error: "@users/update",
-        message: 'You do not have permission to update this user',
+        message: "You do not have permission to update this user",
       });
     }
 
-    const updatedFields = {
-      name,
-      email,
-      cellphone,
-      password
-    };
+    const updatedFields = {};
+    if (name) updatedFields.name = name;
+    if (email) updatedFields.email = email;
+    if (cellphone) updatedFields.cellphone = cellphone;
+    if (password) updatedFields.password = password;
 
-    if (password) {
-      const isSamePassword = await compareHash(password, user.password);
+    const userUpdated = await UserModel.findByIdAndUpdate(id, updatedFields, {
+      new: true,
+    });
 
-      if (!isSamePassword) {
-        updatedFields.password = password;
-      }
-    }
-
-    const userUpdated = await UserModel.findByIdAndUpdate(
-      id,
-      updatedFields,
-      {
-        new: true
-      }
-    );
+    delete userUpdated.password;
 
     return response.json(userUpdated);
   } catch (err) {

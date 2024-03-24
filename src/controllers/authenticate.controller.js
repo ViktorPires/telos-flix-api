@@ -27,7 +27,7 @@ const login = async (request, response) => {
   }
 
   const token = jwt.sign(user, JWT_SECRET, {
-    expiresIn: "1h",
+    expiresIn: "6h",
   });
 
   delete user.password;
