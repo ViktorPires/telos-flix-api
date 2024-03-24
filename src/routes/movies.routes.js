@@ -9,6 +9,7 @@ const { verifyIfUserHasAuthentication } = require("../middlewares/verifyIfUserHa
 const routes = Router();
 
 routes.get("/movies/", verifyIfUserHasAuthentication, moviesController.list);
+routes.get("/movies/free", moviesController.listFreeMovies);
 routes.get("/movies/genres", moviesController.listGenres);
 routes.get("/movies/:id", verifyIfUserHasAuthentication, moviesController.getById);
 

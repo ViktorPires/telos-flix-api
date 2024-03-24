@@ -1,14 +1,15 @@
 const CommentModel = require("../model/comment.model");
 const MovieModel = require("../model/movie.model");
+const { userHasCommentedOnMovie } = require('../validators/comment.validations');
 
 const { InvalidRatingException } = require("../exceptions/InvalidRatingException");
+const { UserAlreadyCommentedException } = require("../exceptions/UserAlreadyCommentedException");
 
 const list = async (request, response) => {
   try {
     const comments = await CommentModel.find()
-      .populate('user_id', '-password -role')
+      .populate('user_id', '-password')
       .populate('movie_id')
-
 
     if (!comments) {
       throw new Error();
@@ -27,7 +28,8 @@ const listCommentsByMovie = async (request, response) => {
   try {
     const { movie_id } = request.params;
 
-    const comments = await CommentModel.find({ movie_id: movie_id }).populate('user_id');
+    const comments = await CommentModel.find({ movie_id: movie_id })
+    .populate('user_id', 'name -_id');
 
     if (!comments) {
       throw new Error();
@@ -46,7 +48,8 @@ const getById = async (request, response) => {
   const { id } = request.params;
 
   try {
-    const comment = await CommentModel.findById(id);
+    const comment = await CommentModel.findById(id)
+    .populate('user_id', 'name -_id');
 
     if (!comment) {
       throw new Error();
@@ -69,15 +72,18 @@ const create = async (request, response) => {
 
     const parseRating = parseFloat(rating);
 
-    // Validating rating value
     if (Number.isNaN(parseRating) || !Number.isInteger(parseRating) || parseRating < 1 || parseRating > 5) {
       throw new InvalidRatingException();
     }
 
     const movie = await MovieModel.findById(movie_id);
-
     if (!movie) {
       throw new Error();
+    }
+
+    const hasCommentedBefore = await userHasCommentedOnMovie(user_id, movie.id);
+    if (hasCommentedBefore) {
+      throw new UserAlreadyCommentedException();
     }
 
     let comment = await CommentModel.create({

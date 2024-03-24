@@ -10,7 +10,8 @@ const list = async (request, response) => {
 
       const filteredMovies = await MovieModel
         .find(title ? { title: { $regex: formattedTitle, $options: "i" } } : { genres: { $all: formattedGenres } })
-        .limit(limit || 30).skip((page - 1) * (limit || 10))
+        .limit(limit || 10)
+        .skip((page - 1) * (limit || 10))
         .select(request.user ? "" : "-video");
 
       return response.json(filteredMovies);
@@ -31,24 +32,44 @@ const list = async (request, response) => {
   }
 };
 
+const listFreeMovies = async (request, response) => {
+  const { limit, page } = request.query
+  try {
+    const freeMovies = await MovieModel
+      .find({ isFree: true })
+      .select("-video")
+      .limit(limit || 10)
+      .skip((page - 1) * (limit || 10));
+
+      if (!freeMovies) {
+        throw new Error("No free movies found");
+      }
+
+      return response.json(freeMovies);
+    } catch (err) {
+      return response.status(400).json({
+        error: "@movies/listFreeMovies",
+        message: err.message || "Failed to list free movies",
+    });
+  }
+};
 const getById = async (request, response) => {
   const { id } = request.params;
 
   try {
-    let movie;
-
-    if (!request.user) {
-      movie = await MovieModel.findById(id).select("-video");
-    } else {
-      movie = await MovieModel.findById(id);
-    }
+    const movie = await MovieModel.findById(id);
 
     if (!movie) {
       throw new Error();
     }
 
-    return response.json(movie);
+    if (movie.isFree || request.user) {
+      return response.json(movie);
+    }
 
+    delete movie.video
+
+    return response.json(movie);
   } catch (err) {
     return response.status(400).json({
       error: "@movies/getById",
@@ -143,6 +164,7 @@ const remove = async (request, response) => {
 
 module.exports = {
   list,
+  listFreeMovies,
   getById,
   listGenres,
   create,
