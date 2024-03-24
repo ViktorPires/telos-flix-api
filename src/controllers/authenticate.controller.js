@@ -25,12 +25,12 @@ const login = async (request, response) => {
   if (!isValidPassword) {
     return response.status(400).json(loginErrorMessage);
   }
+  
+  delete user.password;
 
   const token = jwt.sign(user, JWT_SECRET, {
     expiresIn: "6h",
   });
-
-  delete user.password;
 
   return response.json({ ...user, token });
 };
