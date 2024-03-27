@@ -1,9 +1,6 @@
 const jwt = require(`jsonwebtoken`);
-
-const { JWT_SECRET } = require("../config/env");
-
+const { JWT_SECRET, JWT_EXPIRES_IN } = require("../config/env");
 const UserModel = require("../model/user.model");
-
 const { compareHash } = require("../utils/hashProvider");
 
 const login = async (request, response) => {
@@ -29,7 +26,7 @@ const login = async (request, response) => {
   delete user.password;
 
   const token = jwt.sign(user, JWT_SECRET, {
-    expiresIn: "6h",
+    expiresIn: JWT_EXPIRES_IN,
   });
 
   return response.json({ ...user, token });

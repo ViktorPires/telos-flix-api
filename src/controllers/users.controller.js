@@ -1,4 +1,5 @@
-const { compareHash } = require('../utils/hashProvider');
+const jwt = require(`jsonwebtoken`);
+const { JWT_SECRET, JWT_EXPIRES_IN } = require("../config/env");
 const UserModel = require("../model/user.model");
 
 const list = async (request, response) => {
@@ -97,19 +98,24 @@ const update = async (request, response) => {
       });
     }
 
-    const updatedFields = {};
-    if (name) updatedFields.name = name;
-    if (email) updatedFields.email = email;
-    if (cellphone) updatedFields.cellphone = cellphone;
-    if (password) updatedFields.password = password;
+    const updatedFields = {
+      name: !name ? user.name : name,
+      email: !email ? user.email : email,
+      cellphone: !cellphone ? user.cellphone : cellphone,
+      password: !password ? user.password : password,
+    };
 
-    const userUpdated = await UserModel.findByIdAndUpdate(id, updatedFields, {
+    const userUpdated = await UserModel.findByIdAndUpdate({ _id: id }, { ...updatedFields }, {
       new: true,
-    });
+    }).lean();
 
     delete userUpdated.password;
+    
+    const token = jwt.sign(userUpdated, JWT_SECRET, {
+      expiresIn: JWT_EXPIRES_IN,
+    });
 
-    return response.json(userUpdated);
+    return response.json({ ...userUpdated, token });
   } catch (err) {
     return response.status(400).json({
       error: "@users/update",
