@@ -97,12 +97,12 @@ const update = async (request, response) => {
         message: "You do not have permission to update this user",
       });
     }
-
+    
     const updatedFields = {
-      name: !name ? user.name : name,
-      email: !email ? user.email : email,
-      cellphone: !cellphone ? user.cellphone : cellphone,
-      password: !password ? user.password : password,
+      name: (name?.trim() || user.name),
+      email: (email?.trim() || user.email),
+      cellphone: (cellphone?.trim() || user.cellphone),
+      ...(password && { password }),
     };
 
     const userUpdated = await UserModel.findByIdAndUpdate({ _id: id }, { ...updatedFields }, {
