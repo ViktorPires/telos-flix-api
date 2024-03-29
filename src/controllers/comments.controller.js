@@ -1,9 +1,9 @@
 const CommentModel = require("../model/comment.model");
 const MovieModel = require("../model/movie.model");
-const { userHasCommentedOnMovie } = require('../validators/comment.validations');
+const { userHasRatedOnMovie, isValidRating } = require('../validators/comment.validations');
 
 const { InvalidRatingException } = require("../exceptions/InvalidRatingException");
-const { UserAlreadyCommentedException } = require("../exceptions/UserAlreadyCommentedException");
+const { UserAlreadyRatedException } = require("../exceptions/UserAlreadyRatedException");
 
 const list = async (request, response) => {
   try {
@@ -72,7 +72,7 @@ const create = async (request, response) => {
 
     const parseRating = parseFloat(rating);
 
-    if (Number.isNaN(parseRating) || !Number.isInteger(parseRating) || parseRating < 1 || parseRating > 5) {
+    if (!isValidRating(parseRating)) {
       throw new InvalidRatingException();
     }
 
@@ -81,15 +81,15 @@ const create = async (request, response) => {
       throw new Error();
     }
 
-    const hasCommentedBefore = await userHasCommentedOnMovie(user_id, movie.id);
-    if (hasCommentedBefore) {
-      throw new UserAlreadyCommentedException();
+    const hasRatedBefore = await userHasRatedOnMovie(user_id, movie.id);
+    if (hasRatedBefore) {
+      throw new UserAlreadyRatedException();
     }
 
     let comment = await CommentModel.create({
       user_id,
       movie_id: movie.id,
-      content,
+      content: content?.trim(),
       rating: parseRating
     });
 
@@ -103,7 +103,6 @@ const create = async (request, response) => {
     });
   }
 };
-
 
 const update = async (request, response) => {
   const { id } = request.params;

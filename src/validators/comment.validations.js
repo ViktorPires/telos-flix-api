@@ -1,10 +1,16 @@
 const CommentModel = require("../model/comment.model");
 
-const userHasCommentedOnMovie = async (userId, movieId) => {
+const userHasRatedOnMovie = async (userId, movieId) => {
   const existingComment = await CommentModel.findOne({ user_id: userId, movie_id: movieId });
   return !!existingComment;
 };
 
+const isValidRating = (rating) => {
+  const validRating  = Number.isNaN(rating) || !Number.isInteger(rating) || rating < 1 || rating > 5
+  return !validRating
+}
+
 module.exports = {
-  userHasCommentedOnMovie,
+  userHasRatedOnMovie,
+  isValidRating,
 };
