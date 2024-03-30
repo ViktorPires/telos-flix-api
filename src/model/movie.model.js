@@ -30,7 +30,15 @@ const MovieSchema = new mongoose.Schema(
       type: Boolean,
       required: false,
       default: false,
-    }
+    },
+    totalRating: { 
+      type: Number, 
+      default: 0 
+    },
+    numComments: { 
+      type: Number, 
+      default: 0 
+    },
   },
   {
     timestamps: true,

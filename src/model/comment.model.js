@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const MovieModel = require("./movie.model");
 
 const commentSchema = new mongoose.Schema(
   {
@@ -27,5 +28,28 @@ const commentSchema = new mongoose.Schema(
     timestamps: true
   }
 );
+
+commentSchema.pre('save', async function(next) {
+  const comment = this;
+  const movie = await MovieModel.findById(comment.movie_id);
+
+  if (movie) {
+    movie.totalRating = movie.totalRating + comment.rating;
+    movie.numComments = movie.numComments + 1;
+    await movie.save();
+  }
+
+  next();
+});
+
+commentSchema.post('remove', async function(comment) {
+  const movie = await MovieModel.findById(comment.movie_id);
+
+  if (movie) {
+    movie.totalRating = movie.totalRating - comment.rating;
+    movie.numComments = movie.numComments - 1;
+    await movie.save();
+  }
+});
 
 module.exports = mongoose.model("comments", commentSchema);
