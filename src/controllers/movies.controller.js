@@ -93,7 +93,7 @@ const listGenres = async (request, response) => {
 };
 
 const create = async (request, response) => {
-  const { title, description, year, genres, image, video } = request.body;
+  const { title, description, year, genres, image, video, isFree } = request.body;
 
   try {
     const movie = await MovieModel.create({
@@ -103,6 +103,7 @@ const create = async (request, response) => {
       genres,
       image,
       video,
+      isFree,
     });
 
     return response.status(201).json(movie);
@@ -116,7 +117,7 @@ const create = async (request, response) => {
 
 const update = async (request, response) => {
   const { id } = request.params;
-  const { title, description, year, genres, image, video } = request.body;
+  const { title, description, year, genres, image, video, isFree } = request.body;
 
   try {
     const movieUpdated = await MovieModel.findByIdAndUpdate(
@@ -128,6 +129,7 @@ const update = async (request, response) => {
         genres,
         image,
         video,
+        isFree,
       },
       {
         new: true,
